@@ -4,6 +4,9 @@
 2. Company model
 3. Department model
 
+### Settings file
+
+### Alembic migrations
 
 ### Authentication and permissions
 1. Start all public
