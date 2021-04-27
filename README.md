@@ -2,7 +2,6 @@
 ### Models
 1. User model
 2. Company model
-3. Department model
 
 ### Settings file
 
