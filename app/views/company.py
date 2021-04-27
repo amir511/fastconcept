@@ -33,8 +33,9 @@ def update_company(company_id:int, company:CompanySerializerIn, db:Session=Depen
     company_obj = db.query(Company).get(company_id)
     if not company_obj:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Company not found')
-    for k, v in company.dict().items():
+    for k, v in company.dict(exclude_unset=True).items():
         setattr(company_obj, k, v)
+
     db.commit()
     db.refresh(company_obj)
     return company_obj
