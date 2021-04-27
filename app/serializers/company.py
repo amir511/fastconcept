@@ -1,8 +1,10 @@
 
 from pydantic import BaseModel
+from typing import Optional
 
 class CompanyBaseSerializer(BaseModel):
-    name: str
+    name: Optional[str]
+    description: Optional[str]
 
 class CompanySerializerIn(CompanyBaseSerializer):
     pass
