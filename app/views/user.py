@@ -4,11 +4,12 @@ from app.serializers.user import UserSerializerIn, UserSerializerOut
 from app.models.user import User
 from sqlalchemy.orm import Session
 from app.utils.auth import authenticate_user
+from app.utils.permissions import is_admin
 
-router = APIRouter(prefix='/user', tags=['Users'])
+router = APIRouter(prefix='/user', tags=['Users'], dependencies=[Depends(authenticate_user)])
 
 # CRUD
-@router.post('/create/', response_model=UserSerializerOut, status_code=status.HTTP_201_CREATED)
+@router.post('/create/', response_model=UserSerializerOut, status_code=status.HTTP_201_CREATED, dependencies=[Depends(is_admin)])
 def create_user(user: UserSerializerIn, db:Session=Depends(get_db)):
     user_obj = User(**user.dict())
     user_obj.set_password(user_obj.password)
@@ -25,7 +26,7 @@ def get_user(user_id:int, db:Session=Depends(get_db)):
     return user_obj
 
 @router.get('/get/all/', response_model=list[UserSerializerOut])
-def get_all_users(db:Session=Depends(get_db), user:User=Depends(authenticate_user)):
+def get_all_users(db:Session=Depends(get_db)):
     return db.query(User).all()
 
 @router.patch('/update/{user_id}', response_model=UserSerializerOut)
@@ -42,7 +43,7 @@ def update_user(user_id:int, user:UserSerializerIn, db:Session=Depends(get_db)):
     db.refresh(user_obj)
     return user_obj
 
-@router.delete('/delete/{user_id}', status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
+@router.delete('/delete/{user_id}', status_code=status.HTTP_204_NO_CONTENT, response_class=Response, dependencies=[Depends(is_admin)])
 def delete_user(user_id:int, db:Session=Depends(get_db)):
     user_obj = db.query(User).get(user_id)
     if not user_obj:

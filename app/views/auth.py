@@ -21,8 +21,6 @@ def login(form_data:OAuth2PasswordRequestForm=Depends(), db:Session=Depends(get_
         'refresh_token':refresh
     }
 
-        
-
 @router.post('/refresh/', status_code=status.HTTP_200_OK)
 def refresh_token(refresh_token: str):
     jwt_helper = JWTHelper(refresh_token=refresh_token)
