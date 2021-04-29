@@ -3,6 +3,7 @@ from app.models.db_setup.session import get_db
 from app.serializers.user import UserSerializerIn, UserSerializerOut
 from app.models.user import User
 from sqlalchemy.orm import Session
+from app.utils.auth import authenticate_user
 
 router = APIRouter(prefix='/user', tags=['Users'])
 
@@ -24,7 +25,7 @@ def get_user(user_id:int, db:Session=Depends(get_db)):
     return user_obj
 
 @router.get('/get/all/', response_model=list[UserSerializerOut])
-def get_all_users(db:Session=Depends(get_db)):
+def get_all_users(db:Session=Depends(get_db), user:User=Depends(authenticate_user)):
     return db.query(User).all()
 
 @router.patch('/update/{user_id}', response_model=UserSerializerOut)

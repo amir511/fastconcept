@@ -10,7 +10,9 @@ class Settings(BaseSettings):
         'port':5432,
         'database_server': 'localhost',
     }
-
+    SECRET_KEY: str = 'kn+qZbFvY4pJvKtKaVbJlVBozf0AdPT5jfSa2t0pFY1R8N1QCer3kQ=='
+    JWT_ACCESS_TOKEN_EXPIRATION: int = 60
+    JWT_REFRESH_TOKEN_EXPIRATION: int = 1440
     class Config:
         case_sensitive = True
 
