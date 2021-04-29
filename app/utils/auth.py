@@ -100,7 +100,7 @@ class JWTHelper:
 
 def authenticate_user(access_token: str = Depends(oauth2_scheme), db:Session=Depends(get_db)):
     jwt_helper = JWTHelper(access_token=access_token)
-    if jwt_helper.is_expired:
+    if jwt_helper.is_expired():
         return None
     username = jwt_helper.get_access_info()
     user = db.query(User).filter(User.username==username).one()
