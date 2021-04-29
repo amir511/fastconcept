@@ -8,6 +8,7 @@ class Company(BaseModel):
     id = sql.Column(sql.Integer, primary_key=True, index=True)
     name = sql.Column(sql.String, unique=True)
     description = sql.Column(sql.String, nullable=True)
+    users = sql.orm.relationship('User', backref='company')
 
     def __repr__(self):
         return f'Company: {self.name}'
