@@ -31,7 +31,8 @@ class User(BaseModel):
 
     @validates('email')
     def validate_email(self, key, address):
-        assert '@' in address
+        if address is not None:
+            assert '@' in address
         return address
 
     def set_password(self, new_password):
