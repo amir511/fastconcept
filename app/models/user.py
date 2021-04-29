@@ -27,6 +27,7 @@ class User(BaseModel):
     email = sql.Column(sql.String, nullable=True)
     phone_number = sql.Column(sql.Text, nullable=True)
     password = sql.Column(sql.String, nullable=False)
+    is_admin = sql.Column(sql.Boolean, default=False)
     company_id = sql.Column(sql.Integer, sql.ForeignKey('companies.id'), nullable=False)
 
     @validates('email')
