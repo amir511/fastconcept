@@ -5,6 +5,7 @@ from app.models.user import User
 from sqlalchemy.orm import Session
 from app.utils.auth import authenticate_user
 from app.utils.permissions import is_admin
+from typing import List
 
 router = APIRouter(prefix='/user', tags=['Users'], dependencies=[Depends(authenticate_user)])
 
@@ -25,7 +26,7 @@ def get_user(user_id:int, db:Session=Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail='User not found!')
     return user_obj
 
-@router.get('/get/all/', response_model=list[UserSerializerOut])
+@router.get('/get/all/', response_model=List[UserSerializerOut])
 def get_all_users(db:Session=Depends(get_db)):
     return db.query(User).all()
 
