@@ -12,6 +12,9 @@ psycopg2-binary = "*"
 python-multipart = "*"
 pytz = "*"
 pyjwt = "*"
+uvloop = "*"
+httptools = "*"
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"
